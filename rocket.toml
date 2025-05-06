@@ -1,0 +1,2 @@
+[default.databases.one_on_one]
+url = "postgres://username:password@localhost/one_on_one"

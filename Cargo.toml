@@ -1,0 +1,13 @@
+[package]
+name = "one-on-one"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+diesel = "2"
+dotenvy = "0.15"
+rocket = { version = "0.5.1", features = ["secrets", "json"] }
+rocket_db_pools = { version = "0.2.0", features = ["diesel_postgres"] }
+
+[global.databases]
+my_db = { url = "postgres://username:password@localhost/one_on_one" }
