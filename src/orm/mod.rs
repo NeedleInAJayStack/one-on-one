@@ -51,3 +51,20 @@ pub struct UpdateMeeting {
     pub notes: Option<String>,
     pub action_items: Option<String>,
 }
+
+#[derive(Queryable, Selectable)]
+#[diesel(table_name = schema::surveys)]
+pub struct Survey {
+    pub id: i32,
+    pub one_on_one_id: i32,
+    pub question: String,
+}
+
+#[derive(Queryable, Selectable)]
+#[diesel(table_name = schema::survey_responses)]
+pub struct SurveyResponse {
+    pub id: i32,
+    pub survey_id: i32,
+    pub date: chrono::NaiveDateTime,
+    pub question: String,
+}
