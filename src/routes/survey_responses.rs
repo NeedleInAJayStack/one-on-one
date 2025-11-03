@@ -9,7 +9,10 @@ use crate::schema;
 use crate::Db;
 
 #[get("/surveys-response/<id>")]
-pub async fn get_survey_response(mut db: Connection<Db>, id: i32) -> Result<Json<SurveyResponse>, NotFound<String>> {
+pub async fn get_survey_response(
+    mut db: Connection<Db>,
+    id: i32,
+) -> Result<Json<SurveyResponse>, NotFound<String>> {
     schema::survey_responses::dsl::survey_responses
         .find(id)
         .first::<orm::SurveyResponse>(&mut db)

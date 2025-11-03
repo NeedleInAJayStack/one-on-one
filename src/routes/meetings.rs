@@ -9,6 +9,22 @@ use crate::orm;
 use crate::schema;
 use crate::Db;
 
+#[get("/meetings")]
+pub async fn get_meetings(mut db: Connection<Db>) -> Result<Json<Vec<Meeting>>, NotFound<String>> {
+    schema::meetings::dsl::meetings
+        .load(&mut db)
+        .await
+        .map(|meetings| {
+            return Json(
+                meetings
+                    .into_iter()
+                    .map(|meeting| Meeting::from_orm(meeting))
+                    .collect(),
+            );
+        })
+        .map_err(|e| NotFound(e.to_string()))
+}
+
 #[get("/meetings/<id>")]
 pub async fn get_meeting(
     mut db: Connection<Db>,

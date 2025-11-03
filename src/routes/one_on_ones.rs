@@ -8,6 +8,24 @@ use crate::orm;
 use crate::schema;
 use crate::Db;
 
+#[get("/one-on-ones")]
+pub async fn get_one_on_ones(
+    mut db: Connection<Db>,
+) -> Result<Json<Vec<OneOnOne>>, NotFound<String>> {
+    schema::one_on_ones::dsl::one_on_ones
+        .load(&mut db)
+        .await
+        .map(|one_on_ones| {
+            return Json(
+                one_on_ones
+                    .into_iter()
+                    .map(|one_on_one| OneOnOne::from_orm(one_on_one))
+                    .collect(),
+            );
+        })
+        .map_err(|e| NotFound(e.to_string()))
+}
+
 #[get("/one-on-ones/<id>")]
 pub async fn get_one_on_one(
     mut db: Connection<Db>,
